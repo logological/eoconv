@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 #
-# $Id: eoconv.pl,v 1.22 2004-09-18 17:41:21 psy Exp $
+# $Id: eoconv.pl,v 1.23 2004-09-20 09:33:33 psy Exp $
 #
 # Copyright (C) 2004 Tristan Miller <psychonaut@nothingisreal.com>
 #
@@ -102,6 +102,17 @@ GetOptions('help|?' => \$help,
 pod2usage(0) if $help;
 pod2usage(-exitstatus => 0, -verbose => 2) if $man;
 
+# Display version information
+if ($version) {
+  print <<EOF;
+eoconv 1.0
+Copyright (C) 2004 Tristan Miller
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+EOF
+  exit 0;
+}
+
 # Incorrect invocation
 if (!($from && $to)) {
   pod2usage(-exitstatus => 1, -verbose => 0,
@@ -115,17 +126,6 @@ if (!exists $encodings{$from} || !exists $encodings{$to}) {
 # Warning against using postfix-h
 if (!$quiet && ($from eq "post-h")) {
   print STDERR "eoconv: warning: conversion from postfix-h notation is not recommended\n"
-}
-
-# Display version information
-if ($version) {
-  print <<EOF;
-eoconv 1.0
-Copyright (C) 2004 Tristan Miller
-This is free software; see the source for copying conditions.  There is NO
-warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-EOF
-  exit 0;
 }
 
 # Set Perl's input/output encoding
