@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 #
-# $Id: eoconv.pl,v 1.21 2004-09-18 17:33:41 psy Exp $
+# $Id: eoconv.pl,v 1.22 2004-09-18 17:41:21 psy Exp $
 #
 # Copyright (C) 2004 Tristan Miller <psychonaut@nothingisreal.com>
 #
@@ -194,7 +194,7 @@ eoconv - Convert text files between various Esperanto encodings
 
 =head1 SYNOPSIS
 
-eoconv [--quiet|-q] --from=I<encoding> --to=I<encoding> [F<file>]
+eoconv [-q] --from=I<encoding> --to=I<encoding> [F<file> ...]
 
  Options:
    --from       specify input encoding (see below)
@@ -211,19 +211,19 @@ eoconv [--quiet|-q] --from=I<encoding> --to=I<encoding> [F<file>]
 
 =head1 DESCRIPTION
 
-B<eoconv> will read the given input file (or stdin if no file is
+B<eoconv> will read the given input files (or stdin if no files are
 specified) containing Esperanto text in the encoding specified by
 B<--from>, and then output it in the encoding specified by B<--to>.
 
 =head1 OPTIONS
 
-=over 14
+=over 17
 
-=item B<--from>
+=item B<--from=>I<encoding>
 
 Specify character encoding for input
 
-=item B<--to>
+=item B<--to=>I<encoding>
 
 Specify character encoding for output
 
@@ -249,7 +249,7 @@ Print version information and exit.
 
 =head2 CHARACTER ENCODINGS
 
-=over 14
+=over 17
 
 =item I<post-h>
 
