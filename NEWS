@@ -1,7 +1,7 @@
 eoconv NEWS -- history of user-visible changes
-$Date: 2005-03-14 07:52:49 $
+$Date: 2005-03-14 08:49:20 $
 
-Copyright (C) 2004 Tristan Miller.  See the end of this file for
+Copyright (C) 2004, 2005 Tristan Miller.  See the end of this file for
 copying conditions.
 
 Please send eoconv bug reports to Tristan Miller
@@ -10,10 +10,12 @@ Please send eoconv bug reports to Tristan Miller
 
 Version 1.3
 
-* Added support for postfix-H and postfix-X notation
+* Added support for postfix-H, postfix-X, and LaTeX notation
 * utf-7, utf-8, utf-16, and utf-32 are now aliases for utf7, etc.
+* Many encodings now have aliases with varying capitalization
 * Corrected the version number in the --version output
 * Expanded documentation for the ISO-8859-3 encoding
+* Added `See also' section to documentation
 
 Version 1.2
 
@@ -41,7 +43,7 @@ Version 0.90
 ----------------------------------------------------------------------
 Copyright information:
 
-Copyright (C) 2004 Tristan Miller.
+Copyright (C) 2004, 2005 Tristan Miller.
 
    Permission is granted to anyone to make or distribute verbatim
    copies of this document as received, in any medium, provided that

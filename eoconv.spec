@@ -22,6 +22,7 @@ Esperanto text encodings:
   * ISO-8859-3
   * Unicode (UTF-7, UTF-8, UTF-16, UTF-32)
   * HTML entities (decimal or hexadecimal)
+  * LaTeX sequences
 
 
 %prep

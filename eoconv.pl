@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 #
-# $Id: eoconv.pl,v 1.25 2005-03-14 07:52:49 psy Exp $
+# $Id: eoconv.pl,v 1.26 2005-03-14 08:49:20 psy Exp $
 #
 # Copyright (C) 2004, 2005 Tristan Miller <psychonaut@nothingisreal.com>
 #
@@ -49,9 +49,14 @@ my @enc_post_caret = ("c^", "g^", "h^",
 		      "J^", "S^", "U^");
 
 my @enc_pre_caret = ("^c", "^g", "^h",
-		     "^j", "^s", "^u",	
+		     "^j", "^s", "^u",
 		     "^C", "^G", "^H",
 		     "^J", "^S", "^U");
+
+my @enc_latex = ("\\^{c}",   "\\^{g}", "\\^{h}",
+		 "\\^{\\j}", "\\^{s}", "\\u{u}",
+		 "\\^{C}",   "\\^{G}", "\\^{H}",
+		 "\\^{J}",   "\\^{S}", "\\u{U}");
 
 my @enc_html_hex = ("&#x109;", "&#x11d;", "&#x125;",
 		    "&#x135;", "&#x15d;", "&#x16d;",
@@ -86,8 +91,17 @@ my %encodings = (
 		 'post-caret' => \@enc_post_caret,
 		 'pre-caret'  => \@enc_pre_caret,
 		 'html-hex'   => \@enc_html_hex,
+		 'HTML-hex'   => \@enc_html_hex,
 		 'html-dec'   => \@enc_html_dec,
+		 'HTML-dec'   => \@enc_html_dec,
+		 'latex'      => \@enc_latex,
+		 'LaTeX'      => \@enc_latex,
 		 'iso-8859-3' => \@enc_iso_8859_3,
+		 'ISO-8859-3' => \@enc_iso_8859_3,
+		 'latin3' => \@enc_iso_8859_3,
+		 'latin-3' => \@enc_iso_8859_3,
+		 'Latin3' => \@enc_iso_8859_3,
+		 'Latin-3' => \@enc_iso_8859_3,
 		 'utf-7'      => \@enc_utf7,
 		 'utf-8'      => \@enc_utf8,
 		 'utf-16'     => \@enc_utf8,
@@ -95,6 +109,14 @@ my %encodings = (
 		 'utf7'       => \@enc_utf7,
 		 'utf8'       => \@enc_utf8,
 		 'utf16'      => \@enc_utf8,
+		 'utf32'      => \@enc_utf8,
+		 'UTF-7'      => \@enc_utf7,
+		 'UTF-8'      => \@enc_utf8,
+		 'UTF-16'     => \@enc_utf8,
+		 'UTF-32'     => \@enc_utf8,
+		 'UTF7'       => \@enc_utf7,
+		 'UTF8'       => \@enc_utf8,
+		 'UTF16'      => \@enc_utf8,
 		 'utf32'      => \@enc_utf8
 		);
 
@@ -146,15 +168,15 @@ if (!$quiet && ($from eq "post-h" || $from eq "post-H")) {
 
 # Set Perl's input/output encoding
 my $enc_from = "ascii";
-$enc_from = $from if $from =~ /^utf|^iso/;
+$enc_from = $from if $from =~ /^utf|^iso|^latin/i;
 
 my $enc_to = "ascii";
-$enc_to = $to if $to =~ /^utf|^iso/;
+$enc_to = $to if $to =~ /^utf|^iso|^latin/i;
 
 use encoding 'ascii', STDOUT => $to, STDIN => $from;
 
 # Case: both encodings are ISO/UTF
-if ($enc_from =~ /^utf|^iso/ && $enc_to =~ /^utf|^iso/) {
+if ($enc_from =~ /^utf|^iso|^latin/i && $enc_to =~ /^utf|^iso|^latin/i) {
   foreach $line (<>) {
     from_to($line, $enc_from, $enc_to);
     print $line;
@@ -177,7 +199,7 @@ if ($enc_from =~ /^ascii/ && $enc_to =~ /^ascii/) {
 }
 
 # Case: ASCII => ISO/UTF
-if ($enc_from =~ /^ascii/ && $enc_to =~ /^utf|^iso/) {
+if ($enc_from =~ /^ascii/ && $enc_to =~ /^utf|^iso|^latin/i) {
   $from = $encodings{$from};
   $to   = $encodings{"iso-8859-3"};
   foreach $line (<>) {
@@ -223,7 +245,7 @@ eoconv [-q] --from=I<encoding> --to=I<encoding> [F<file> ...]
    --version    display version information
 
  Valid encodings:
-   post-h post-H post-x post-X post-caret pre-caret
+   post-h post-H post-x post-X post-caret pre-caret latex
    html-hex html-dec iso-8859-3 utf-7 utf-8 utf-16 utf-32
 
 =head1 DESCRIPTION
@@ -292,31 +314,35 @@ ASCII postfix caret (^) notation
 
 ASCII prefix caret (^) notation
 
-=item I<html-hex>
+=item I<latex>, I<LaTeX>
+
+ASCII LaTeX sequences
+
+=item I<html-hex>, I<HTML-hex>
 
 ASCII HTML hexadecimal entities
 
-=item I<html-dec>
+=item I<html-dec>, I<HTML-dec>
 
 ASCII HTML decimal entities
 
-=item I<iso-8859-3>
+=item I<iso-8859-3>, I<ISO-8859-3>, I<latin3>, I<latin-3>, I<Latin3>, I<Latin-3>
 
 ISO-8859-3
 
-=item I<utf-7>
+=item I<utf-7>, I<UTF-7>, I<utf7>, I<UTF-7>
 
 Unicode UTF-7
 
-=item I<utf-8>
+=item I<utf-8>, I<UTF-8>, I<utf8>, I<UTF-8>
 
 Unicode UTF-8
 
-=item I<utf-16>
+=item I<utf-16>, I<UTF-16>, I<utf16>, I<UTF-16>
 
 Unicode UTF-16
 
-=item I<utf-32>
+=item I<utf-32>, I<UTF-32>, I<utf32>, I<UTF-32>
 
 Unicode UTF-32
 
@@ -387,6 +413,14 @@ language to a specific code.  The mapping methods are known as Unicode
 Transformation Formats (UTF). Among them are UTF-32, UTF-16, UTF-8 and
 UTF-7, where the numbers indicate the number of bits in one unit.
 
+=head2 LaTeX SEQUENCES
+
+The popular LaTeX typesetting package is capable of representing
+virtually any accented character.  Note that conversion from LaTeX
+sequences assumes that characters to be accented are enclosed in
+braces -- for example, `\^{C}' will be recognized as `C' with
+circumflex, but `\^C' will not be.
+
 =head2 HTML ENTITIES
 
 Unicode codes for Esperanto characters can be escaped in HTML
@@ -402,6 +436,10 @@ in coherent text.  Use at your own risk, and carefully proofread the
 results.
 
 Report bugs to E<lt>psychonaut@nothingisreal.comE<gt>.
+
+=head1 SEE ALSO
+
+charsets(7), ascii(7), iso_8859-3(7), unicode(7), utf-8(7), latex(1)
 
 =head1 COPYRIGHT
 
