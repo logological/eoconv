@@ -1,7 +1,5 @@
 #!/usr/bin/perl
 
-# $Id: eoconv.pl,v 1.4 2004-09-10 20:59:53 psy Exp $
-
 # Copyright (C) 2004 Tristan Miller <psychonaut@nothingisreal.com>
 #
 # This program is free software; you can redistribute it and/or modify
@@ -24,10 +22,30 @@ use Pod::Usage;
 
 my $man = 0;
 my $help = 0;
+my $version = 0;
+my $ver='$Id: eoconv.pl,v 1.5 2004-09-10 21:35:01 psy Exp $';
 
-GetOptions('help|?' => \$help, man => \$man) or pod2usage(2);
+GetOptions('help|?' => \$help,
+	   man => \$man,
+	   version => \$version
+	  ) or pod2usage(2);
+
 pod2usage(1) if $help;
+
 pod2usage(-exitstatus => 0, -verbose => 2) if $man;
+
+if ($version) {
+  $_ = substr $ver, 5;
+  s/ ....\/..\/.. .*//;
+  s/\.pl,v//;
+  print <<EOF;
+$_
+Copyright (C) 2004 Tristan Miller
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+EOF
+  exit 0;
+}
 
 # To do:
 # - First, convert string to Unicode
@@ -94,33 +112,91 @@ __END__
 
 =head1 NAME
 
-sample - Using Getopt::Long and Pod::Usage
+eoconv - Convert text files between various Esperanto encodings
 
 =head1 SYNOPSIS
 
-sample [options] [file ...]
+eoconv [options] [file]
 
  Options:
-   -helpbrief help message
-   -man full documentation
+   --from      specify input encoding (see below)
+   --to        specify output encoding (see below)
+
+   --help      detailed help message
+   --man       full documentation
+   --version   display version information
+
+ Valid encodings:
+   h x pc cp iso-8859-3 utf-7 utf-8 utf-16
 
 =head1 OPTIONS
 
-=over 8
+=over 12
 
-=item B<-help>
+=item B<--from>
 
-Print a brief help message and exits.
+Specify character encoding for input
 
-=item B<-man>
+=item B<--to>
 
-Prints the manual page and exits.
+Specify character encoding for output
+
+=item B<--help>
+
+Print a brief help message and exit.
+
+=item B<--man>
+
+Print the manual page and exit.
+
+=item B<--version>
+
+Print version information and exit.
+
+=back
+
+=head2 CHARACTER ENCODINGS
+
+=over 12
+
+=item B<h>
+
+Postfix h notation
+
+=item B<x>
+
+Postfix x notation
+
+=item B<pc>
+
+Prefix caret (^) notation
+
+=item B<cp>
+
+Postfix caret (^) notation
+
+=item B<iso-8859-3>
+
+ISO-8859-3
+
+=item B<utf-7>
+
+Unicode UTF-7
+
+=item B<utf-8>
+
+Unicode UTF-8
+
+=item B<utf-16>
+
+Unicode UTF-16
 
 =back
 
 =head1 DESCRIPTION
 
-B<This program> will read the given input file(s) and do someting
-useful with the contents thereof.
+B<eoconv> will read the given input file (or stdin if no file is
+specified) containing Esperanto text in the encoding specified by
+B<--from>, and then output it in the encoding specified by B<--to>.
 
 =cut
