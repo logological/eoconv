@@ -8,6 +8,7 @@ URL: http://www.nothingisreal.com/eoconv/
 Source0: http://www.nothingisreal.com/eoconv/%{name}-%{version}.tar.bz2
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 Prefix: %{_prefix}
+Requires: perl >= 5.6
 
 %description
 eoconv is a tool which converts text files to and from the following
