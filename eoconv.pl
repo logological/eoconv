@@ -8,6 +8,8 @@
 #      use Encode 'from_to';
 #      from_to($data, "iso-8859-3", "utf-8");
 
+# $Id: eoconv.pl,v 1.11 2004-09-10 22:41:18 psy Exp $
+
 # Copyright (C) 2004 Tristan Miller <psychonaut@nothingisreal.com>
 #
 # This program is free software; you can redistribute it and/or modify
@@ -33,7 +35,6 @@ my $help = 0;
 my $version = 0;
 my $from = 0;
 my $to = 0;
-my $ver='$Id: eoconv.pl,v 1.10 2004-09-10 22:40:34 psy Exp $';
 
 GetOptions('help|?' => \$help,
 	   man => \$man,
@@ -51,11 +52,8 @@ pod2usage(-exitstatus => 1, -verbose => 0) if (!($from && $to));
 
 # Display version information
 if ($version) {
-  $_ = substr $ver, 5;
-  s/ ....\/..\/.. .*//;
-  s/\.pl,v//;
   print <<EOF;
-$_
+eoconv 0.9
 Copyright (C) 2004 Tristan Miller
 This is free software; see the source for copying conditions.  There is NO
 warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
