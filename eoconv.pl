@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 #
-# $Id: eoconv.pl,v 1.17 2004-09-11 00:18:02 psy Exp $
+# $Id: eoconv.pl,v 1.18 2004-09-11 01:05:09 psy Exp $
 #
 # Copyright (C) 2004 Tristan Miller <psychonaut@nothingisreal.com>
 #
@@ -58,6 +58,11 @@ my @enc_iso_8859_3 = ("\xe6", "\xf8", "\xb6",
 		      "\xc6", "\xd8", "\xa6",
 		      "\xac", "\xde", "\xdd");
 
+my @enc_utf7 = ("\\+AQk-", "\\+AR0-", "\\+ASU-",
+		"\\+ATU-", "\\+AV0-", "\\+AW0-",
+		"\\+AQg-", "\\+ARw-", "\\+ASQ-",
+		"\\+ATQ-", "\\+AVw-", "\\+AWw-");
+
 my @enc_utf8 = ("\x{0109}", "\x{011d}", "\x{0125}",
 		 "\x{0135}", "\x{015d}", "\x{016d}",
 		 "\x{0108}", "\x{011c}", "\x{0124}",
@@ -71,12 +76,13 @@ my %encodings = (
 		 'html-hex'   => \@enc_html_hex,
 		 'html-dec'   => \@enc_html_dec,
 		 'iso-8859-3' => \@enc_iso_8859_3,
-		 'utf7'       => \@enc_utf8,
+		 'utf7'       => \@enc_utf7,
 		 'utf8'       => \@enc_utf8,
 		 'utf16'      => \@enc_utf8,
 		 'utf32'      => \@enc_utf8
 		);
 
+# Parse command-line options
 my $man = 0;
 my $help = 0;
 my $version = 0;
@@ -126,7 +132,7 @@ use encoding 'ascii', STDOUT => $to, STDIN => $from;
 
 print STDERR "from     = $from\tto     = $to\nenc_from = $enc_from\tenc_to = $enc_to\n";
 
-# Simple case: both encodings are ISO/UTF
+# Case: both encodings are ISO/UTF
 if ($enc_from =~ /^utf|^iso/ && $enc_to =~ /^utf|^iso/) {
   foreach $line (<>) {
     from_to($line, $enc_from, $enc_to);
@@ -135,10 +141,10 @@ if ($enc_from =~ /^utf|^iso/ && $enc_to =~ /^utf|^iso/) {
   exit;
 }
 
-# Simple case: both encodings are ASCII
-$from = $encodings{$from};
-$to   = $encodings{$to};
+# Case: both encodings are ASCII
 if ($enc_from =~ /^ascii/ && $enc_to =~ /^ascii/) {
+  $from = $encodings{$from};
+  $to   = $encodings{$to};
   foreach $line (<>) {
     for($i = 0; $i < @$from ; $i++)
       {
@@ -149,16 +155,36 @@ if ($enc_from =~ /^ascii/ && $enc_to =~ /^ascii/) {
   exit;
 }
 
-# Perform character substitution
-foreach $line (<>) {
-#  from_to($line, $enc_from, 'utf8');
-  for($i = 0; $i < @$from ; $i++)
-    {
-      $line =~ s/$$from[$i]/$$to[$i]/g;
-    }
-#  from_to($line, 'utf8', $enc_to);
-  print $line;
+# Case: ASCII => ISO/UTF
+if ($enc_from =~ /^ascii/ && $enc_to =~ /^utf|^iso/) {
+  $from = $encodings{$from};
+  $to   = $encodings{"iso-8859-3"};
+  foreach $line (<>) {
+    for($i = 0; $i < @$from ; $i++)
+      {
+	$line =~ s/$$from[$i]/$$to[$i]/g;
+      }
+    from_to($line, 'iso-8859-3', $enc_to);
+    print $line;
+  }
 }
+
+# Case: ISO/UTF => ASCII
+  $from = $encodings{'utf7'};
+  $to   = $encodings{$to};
+  foreach $line (<>) {
+#    print "BEFORE1: $line";
+    from_to($line, $enc_from, 'utf7');
+#    $line = encoding::encode("iso-8859-3", $line);
+#    $line =~ s/\\+AQk-/FOOOOOOOOOOO/;
+#    die "Foo!" if utf8::is_utf8($line);
+    for($i = 0; $i < @$from ; $i++)
+      {
+#	print "Looking for $$from[$i] => $$to[$i]...\n";
+	$line =~ s/$$from[$i]/$$to[$i]/g;
+      }
+    print $line;
+  }
 
 __END__
 
