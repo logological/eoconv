@@ -9,6 +9,7 @@ Source0: http://www.nothingisreal.com/eoconv/%{name}-%{version}.tar.bz2
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 Prefix: %{_prefix}
 Requires: perl >= 5.6
+Distribution: SuSE 9.0 (noarch)
 
 %description
 eoconv is a tool which converts text files to and from the following
@@ -30,9 +31,9 @@ Esperanto text encodings:
 
 %install
 [ "$RPM_BUILD_ROOT" != "/" ] && rm -rf $RPM_BUILD_ROOT
-cp eoconv.pl %{_prefix}/bin/eoconv
-cp doc/eoconv.1 %{_prefix}/man/man1/eoconv.1
-gzip %{_prefix}/man/man1/eoconv.1
+install -D eoconv.pl $RPM_BUILD_ROOT%{_prefix}/bin/eoconv
+gzip doc/eoconv.1
+install -D doc/eoconv.1.gz $RPM_BUILD_ROOT%{_prefix}/share/man/man1/eoconv.1.gz
 
 %clean
 [ "$RPM_BUILD_ROOT" != "/" ] && rm -rf $RPM_BUILD_ROOT
@@ -42,7 +43,7 @@ gzip %{_prefix}/man/man1/eoconv.1
 %defattr(-,root,root,-)
 %{_prefix}/bin/eoconv
 %doc AUTHORS COPYING INSTALL NEWS README THANKS
-%doc %{_prefix}/man/man1/eoconv.1.gz
+%doc %{_prefix}/share/man/man1/eoconv.1.gz
 
 
 
