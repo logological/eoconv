@@ -23,11 +23,15 @@ use Pod::Usage;
 my $man = 0;
 my $help = 0;
 my $version = 0;
-my $ver='$Id: eoconv.pl,v 1.7 2004-09-10 21:45:39 psy Exp $';
+my $from = "";
+my $to = "";
+my $ver='$Id: eoconv.pl,v 1.8 2004-09-10 22:28:54 psy Exp $';
 
 GetOptions('help|?' => \$help,
 	   man => \$man,
-	   version => \$version
+	   version => \$version,
+	   'from=s' => \$from,
+	   'to=s' => \$to,
 	  ) or pod2usage(2);
 
 # Display help/man page
@@ -117,7 +121,7 @@ eoconv - Convert text files between various Esperanto encodings
 
 =head1 SYNOPSIS
 
-eoconv [options] [file]
+eoconv --from=I<enc> --to=I<enc> [F<file>]
 
  Options:
    --from      specify input encoding (see below)
@@ -134,7 +138,7 @@ eoconv [options] [file]
 
 =head1 OPTIONS
 
-=over 12
+=over 14
 
 =item B<--from>
 
@@ -160,45 +164,45 @@ Print version information and exit.
 
 =head2 CHARACTER ENCODINGS
 
-=over 12
+=over 14
 
-=item B<post-h>
+=item I<post-h>
 
 Postfix h notation
 
-=item B<post-x>
+=item I<post-x>
 
 Postfix x notation
 
-=item B<post-caret>
+=item I<post-caret>
 
 Postfix caret (^) notation
 
-=item B<pre-caret>
+=item I<pre-caret>
 
 Prefix caret (^) notation
 
-=item B<iso-8859-3>
+=item I<iso-8859-3>
 
 ISO-8859-3
 
-=item B<utf-7>
+=item I<utf-7>
 
 Unicode UTF-7
 
-=item B<utf-8>
+=item I<utf-8>
 
 Unicode UTF-8
 
-=item B<utf-16>
+=item I<utf-16>
 
 Unicode UTF-16
 
-=item B<html-hex>
+=item I<html-hex>
 
 HTML hexadecimal entities
 
-=item B<html-dec>
+=item I<html-dec>
 
 HTML decimal entities
 
