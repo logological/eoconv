@@ -1,5 +1,5 @@
 CHEOPS NEWS -- history of user-visible changes
-$Date: 2004-09-18 17:56:54 $
+$Date: 2004-09-20 09:35:50 $
 
 Copyright (C) 2004 Tristan Miller.  See the end of this file for
 copying conditions.
@@ -7,6 +7,10 @@ copying conditions.
 Please send CHEOPS bug reports to Tristan Miller
 <psychonaut@nothingisreal.com>.
 
+
+Version 1.1
+
+* Fixed a minor bug where the --version option did not work
 
 Version 1.0
 
