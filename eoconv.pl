@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 #
-# $Id: eoconv.pl,v 1.18 2004-09-11 01:05:09 psy Exp $
+# $Id: eoconv.pl,v 1.19 2004-09-11 01:23:15 psy Exp $
 #
 # Copyright (C) 2004 Tristan Miller <psychonaut@nothingisreal.com>
 #
@@ -130,8 +130,6 @@ $enc_to = $to if $to =~ /^utf|^iso/;
 
 use encoding 'ascii', STDOUT => $to, STDIN => $from;
 
-print STDERR "from     = $from\tto     = $to\nenc_from = $enc_from\tenc_to = $enc_to\n";
-
 # Case: both encodings are ISO/UTF
 if ($enc_from =~ /^utf|^iso/ && $enc_to =~ /^utf|^iso/) {
   foreach $line (<>) {
@@ -173,14 +171,9 @@ if ($enc_from =~ /^ascii/ && $enc_to =~ /^utf|^iso/) {
   $from = $encodings{'utf7'};
   $to   = $encodings{$to};
   foreach $line (<>) {
-#    print "BEFORE1: $line";
     from_to($line, $enc_from, 'utf7');
-#    $line = encoding::encode("iso-8859-3", $line);
-#    $line =~ s/\\+AQk-/FOOOOOOOOOOO/;
-#    die "Foo!" if utf8::is_utf8($line);
     for($i = 0; $i < @$from ; $i++)
       {
-#	print "Looking for $$from[$i] => $$to[$i]...\n";
 	$line =~ s/$$from[$i]/$$to[$i]/g;
       }
     print $line;
@@ -208,6 +201,12 @@ eoconv --from=I<encoding> --to=I<encoding> [F<file>]
    post-h post-x post-caret pre-caret
    iso-8859-3 utf7 utf8 utf16 utf32
    html-hex html-dec
+
+=head1 DESCRIPTION
+
+B<eoconv> will read the given input file (or stdin if no file is
+specified) containing Esperanto text in the encoding specified by
+B<--from>, and then output it in the encoding specified by B<--to>.
 
 =head1 OPTIONS
 
@@ -285,10 +284,16 @@ ASCII HTML decimal entities
 
 =back
 
-=head1 DESCRIPTION
+=head1 BUGS
 
-B<eoconv> will read the given input file (or stdin if no file is
-specified) containing Esperanto text in the encoding specified by
-B<--from>, and then output it in the encoding specified by B<--to>.
+Report bugs to E<lt>psychonaut@nothingisreal.comE<gt>.
+
+=head1 COPYRIGHT
+
+Copyright (C) 2004 Tristan Miller.
+
+Permission is granted to make and distribute verbatim or modified
+copies of this manual provided the copyright notice and this
+permission notice are preserved on all copies.
 
 =cut
