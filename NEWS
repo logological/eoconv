@@ -1,5 +1,5 @@
 CHEOPS NEWS -- history of user-visible changes
-$Date: 2004-09-18 17:45:48 $
+$Date: 2004-09-18 17:56:54 $
 
 Copyright (C) 2004 Tristan Miller.  See the end of this file for
 copying conditions.
@@ -13,6 +13,7 @@ Version 1.0
 * Fixed bug in postfix-h notation where `u'-breve was incorrectly
   transliterated to `uh'
 * Significantly expanded and revised documentation
+* Expanded and revised installation instructions
 * Added warning for postfix-h notation
 * Added --quiet option to suppress warnings
 
