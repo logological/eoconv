@@ -8,7 +8,7 @@
 #      use Encode 'from_to';
 #      from_to($data, "iso-8859-3", "utf-8");
 
-# $Id: eoconv.pl,v 1.12 2004-09-10 22:54:43 psy Exp $
+# $Id: eoconv.pl,v 1.13 2004-09-10 23:28:22 psy Exp $
 
 # Copyright (C) 2004 Tristan Miller <psychonaut@nothingisreal.com>
 #
@@ -29,6 +29,7 @@
 
 use Getopt::Long;
 use Pod::Usage;
+use Encode 'from_to';
 
 my @enc_post_x = ("cx", "gx", "hx",
 		  "jx", "sx", "ux",
@@ -80,7 +81,7 @@ my %encodings = (
 		 'iso-8859-3' => \@enc_iso_8859_3,
 		 'utf-7'      => \@enc_utf_7,
 		 'utf-8'      => \@enc_utf_8,
-		 'utf-16'     => \@enc_utf_16
+		 'utf-16'     => \@enc_utf_8
 		);
 
 my $man = 0;
@@ -121,10 +122,12 @@ EOF
   exit 0;
 }
 
+# Convert between ASCII encodings
 $from = $encodings{$from};
 $to   = $encodings{$to};
 
 foreach $line (<>) {
+
 
   for($i = 0; $i < @$from ; $i++)
     {
