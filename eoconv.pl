@@ -8,7 +8,7 @@
 #      use Encode 'from_to';
 #      from_to($data, "iso-8859-3", "utf-8");
 
-# $Id: eoconv.pl,v 1.11 2004-09-10 22:41:18 psy Exp $
+# $Id: eoconv.pl,v 1.12 2004-09-10 22:54:43 psy Exp $
 
 # Copyright (C) 2004 Tristan Miller <psychonaut@nothingisreal.com>
 #
@@ -29,37 +29,6 @@
 
 use Getopt::Long;
 use Pod::Usage;
-
-my $man = 0;
-my $help = 0;
-my $version = 0;
-my $from = 0;
-my $to = 0;
-
-GetOptions('help|?' => \$help,
-	   man => \$man,
-	   version => \$version,
-	   'from=s' => \$from,
-	   'to=s' => \$to,
-	  ) or pod2usage(1);
-
-# Display help/man page
-pod2usage(0) if $help;
-pod2usage(-exitstatus => 0, -verbose => 2) if $man;
-
-# Incorrect invocation
-pod2usage(-exitstatus => 1, -verbose => 0) if (!($from && $to));
-
-# Display version information
-if ($version) {
-  print <<EOF;
-eoconv 0.9
-Copyright (C) 2004 Tristan Miller
-This is free software; see the source for copying conditions.  There is NO
-warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-EOF
-  exit 0;
-}
 
 my @enc_post_x = ("cx", "gx", "hx",
 		  "jx", "sx", "ux",
@@ -102,20 +71,58 @@ my @enc_utf_8 = ("\x{0109}", "\x{011d}", "\x{0125}",
 		 "\x{0134}", "\x{015c}", "\x{016c}");
 
 my %encodings = (
-		 post_x     => \@enc_post_x,
-		 post_h     => \@enc_post_h,
-		 post_caret => \@enc_post_caret,
-		 pre_caret  => \@enc_pre_caret,
-		 html_hex   => \@enc_html_hex,
-		 html_dec   => \@enc_html_dec,
-		 iso_8859_3 => \@enc_iso_8859_3,
-		 utf_7      => \@enc_utf_7,
-		 utf_8      => \@enc_utf_8,
-		 utf_16     => \@enc_utf_16
+		 'post-x'     => \@enc_post_x,
+		 'post-h'     => \@enc_post_h,
+		 'post-caret' => \@enc_post_caret,
+		 'pre-caret'  => \@enc_pre_caret,
+		 'html-hex'   => \@enc_html_hex,
+		 'html-dec'   => \@enc_html_dec,
+		 'iso-8859-3' => \@enc_iso_8859_3,
+		 'utf-7'      => \@enc_utf_7,
+		 'utf-8'      => \@enc_utf_8,
+		 'utf-16'     => \@enc_utf_16
 		);
 
-$from = \@enc_post_x;
-$to   = \@enc_iso_8859_3;
+my $man = 0;
+my $help = 0;
+my $version = 0;
+my $from = 0;
+my $to = 0;
+
+GetOptions('help|?' => \$help,
+	   man => \$man,
+	   version => \$version,
+	   'from=s' => \$from,
+	   'to=s' => \$to,
+	  ) or pod2usage(1);
+
+# Display help/man page
+pod2usage(0) if $help;
+pod2usage(-exitstatus => 0, -verbose => 2) if $man;
+
+# Incorrect invocation
+if (!($from && $to)) {
+  pod2usage(-exitstatus => 1, -verbose => 0,
+	    -msg => "eoconv: must specify both an input and output encoding");
+}
+if (!exists $encodings{$from} || !exists $encodings{$to}) {
+  pod2usage(-exitstatus => 1, -verbose => 0,
+	    -msg => "eoconv: invalid encoding specified");
+}
+
+# Display version information
+if ($version) {
+  print <<EOF;
+eoconv 0.9
+Copyright (C) 2004 Tristan Miller
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+EOF
+  exit 0;
+}
+
+$from = $encodings{$from};
+$to   = $encodings{$to};
 
 foreach $line (<>) {
 
@@ -135,7 +142,7 @@ eoconv - Convert text files between various Esperanto encodings
 
 =head1 SYNOPSIS
 
-eoconv --from=I<enc> --to=I<enc> [F<file>]
+eoconv --from=I<encoding> --to=I<encoding> [F<file>]
 
  Options:
    --from      specify input encoding (see below)
