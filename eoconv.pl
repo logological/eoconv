@@ -1,15 +1,7 @@
 #!/usr/bin/perl
-
-# To do:
-# - First, convert string to Unicode
-# - Then, use the Encode module to encode to whatever
-#   encoding is desired (utf-8, utf-7, utf-16, etc.)
-#   e.g. 
-#      use Encode 'from_to';
-#      from_to($data, "iso-8859-3", "utf-8");
-
-# $Id: eoconv.pl,v 1.15 2004-09-11 00:10:15 psy Exp $
-
+#
+# $Id: eoconv.pl,v 1.16 2004-09-11 00:13:19 psy Exp $
+#
 # Copyright (C) 2004 Tristan Miller <psychonaut@nothingisreal.com>
 #
 # This program is free software; you can redistribute it and/or modify
@@ -143,9 +135,21 @@ if ($enc_from =~ /^utf|^iso/ && $enc_to =~ /^utf|^iso/) {
   exit;
 }
 
-# Perform character substitution
+# Simple case: both encodings are ASCII
 $from = $encodings{$from};
 $to   = $encodings{$to};
+if ($enc_from =~ /^ascii/ && $enc_to =~ /^ascii/) {
+  foreach $line (<>) {
+    for($i = 0; $i < @$from ; $i++)
+      {
+	$line =~ s/$$from[$i]/$$to[$i]/g;
+      }
+    print $line;
+  }
+  exit;
+}
+
+# Perform character substitution
 
 foreach $line (<>) {
 
@@ -155,10 +159,6 @@ foreach $line (<>) {
 
   print "before2: $line";
 
-  for($i = 0; $i < @$from ; $i++)
-    {
-#      $line =~ s/$$from[$i]/$$to[$i]/g;
-    }
 
   print "after1: $line";
 
