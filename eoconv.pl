@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 #
-# $Id: eoconv.pl,v 1.27 2005-03-15 03:33:08 psy Exp $
+# $Id: eoconv.pl,v 1.28 2005-03-15 03:54:36 psy Exp $
 #
 # Copyright (C) 2004, 2005 Tristan Miller <psychonaut@nothingisreal.com>
 #
@@ -330,19 +330,19 @@ ASCII HTML decimal entities
 
 ISO-8859-3
 
-=item I<utf-7>, I<UTF-7>, I<utf7>, I<UTF-7>
+=item I<utf-7>, I<UTF-7>, I<utf7>, I<UTF7>
 
 Unicode UTF-7
 
-=item I<utf-8>, I<UTF-8>, I<utf8>, I<UTF-8>
+=item I<utf-8>, I<UTF-8>, I<utf8>, I<UTF8>
 
 Unicode UTF-8
 
-=item I<utf-16>, I<UTF-16>, I<utf16>, I<UTF-16>
+=item I<utf-16>, I<UTF-16>, I<utf16>, I<UTF16>
 
 Unicode UTF-16
 
-=item I<utf-32>, I<UTF-32>, I<utf32>, I<UTF-32>
+=item I<utf-32>, I<UTF-32>, I<utf32>, I<UTF32>
 
 Unicode UTF-32
 
