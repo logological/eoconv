@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 #
-# $Id: eoconv.pl,v 1.16 2004-09-11 00:13:19 psy Exp $
+# $Id: eoconv.pl,v 1.17 2004-09-11 00:18:02 psy Exp $
 #
 # Copyright (C) 2004 Tristan Miller <psychonaut@nothingisreal.com>
 #
@@ -150,21 +150,14 @@ if ($enc_from =~ /^ascii/ && $enc_to =~ /^ascii/) {
 }
 
 # Perform character substitution
-
 foreach $line (<>) {
-
-  print "before1: $line";
-
-  from_to($line, $enc_from, 'utf8');
-
-  print "before2: $line";
-
-
-  print "after1: $line";
-
-  from_to($line, $enc_from, $enc_to);
-
-  print "after2: $line";
+#  from_to($line, $enc_from, 'utf8');
+  for($i = 0; $i < @$from ; $i++)
+    {
+      $line =~ s/$$from[$i]/$$to[$i]/g;
+    }
+#  from_to($line, 'utf8', $enc_to);
+  print $line;
 }
 
 __END__
