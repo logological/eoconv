@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 #
-# $Id: eoconv.pl,v 1.23 2004-09-20 09:33:33 psy Exp $
+# $Id: eoconv.pl,v 1.24 2004-11-26 18:49:47 psy Exp $
 #
 # Copyright (C) 2004 Tristan Miller <psychonaut@nothingisreal.com>
 #
@@ -172,6 +172,7 @@ if ($enc_from =~ /^ascii/ && $enc_to =~ /^utf|^iso/) {
     from_to($line, 'iso-8859-3', $enc_to);
     print $line;
   }
+  exit;
 }
 
 # Case: ISO/UTF => ASCII
