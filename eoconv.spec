@@ -1,6 +1,6 @@
 Summary: Convert text files between various Esperanto encodings
 Name: eoconv
-Version: 1.3
+Version: 1.3.1
 Release: 1
 License: GPL
 Group: Applications/Text
@@ -49,6 +49,6 @@ install -D doc/eoconv.1.gz $RPM_BUILD_ROOT%{_prefix}/share/man/man1/eoconv.1.gz
 
 
 %changelog
-* Mon Mar 14 2005 Tristan Miller <psychonaut@nothingisreal.com> - 
+* Mon Mar 15 2005 Tristan Miller <psychonaut@nothingisreal.com> - 
 - Initial build.
 
