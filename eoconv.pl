@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 #
-# $Id: eoconv.pl,v 1.19 2004-09-11 01:23:15 psy Exp $
+# $Id: eoconv.pl,v 1.20 2004-09-11 01:41:46 psy Exp $
 #
 # Copyright (C) 2004 Tristan Miller <psychonaut@nothingisreal.com>
 #
@@ -113,7 +113,7 @@ if (!exists $encodings{$from} || !exists $encodings{$to}) {
 # Display version information
 if ($version) {
   print <<EOF;
-eoconv 0.9
+eoconv 0.90
 Copyright (C) 2004 Tristan Miller
 This is free software; see the source for copying conditions.  There is NO
 warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.

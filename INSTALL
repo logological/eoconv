@@ -1,0 +1,25 @@
+SYSTEM REQUIREMENTS
+-------------------
+
+eoconv requires Perl 5.6 or higher.  It should run on any system that
+runs this version of Perl, though it's been tested only on Unix-like
+systems.
+
+
+INSTALLATION
+------------
+
+At the moment no automatic installation is provided.  Simply copy the
+eoconv.pl file to somewhere in your path (e.g., /usr/local/bin).
+Documentation in various formats is available in the `doc'
+subdirectory.  Note that the script assumes that your Perl
+installation is in /usr/bin/perl; if you have Perl installed
+elsewhere, you will need to edit the first line of the script.
+
+
+RUNNING
+-------
+
+Simply run eoconv.pl from the command line.  Brief help is available
+with the --help command-line option; a detailed man page is available
+with the --man command-line option.
