@@ -8,7 +8,7 @@
 #      use Encode 'from_to';
 #      from_to($data, "iso-8859-3", "utf-8");
 
-# $Id: eoconv.pl,v 1.14 2004-09-11 00:09:43 psy Exp $
+# $Id: eoconv.pl,v 1.15 2004-09-11 00:10:15 psy Exp $
 
 # Copyright (C) 2004 Tristan Miller <psychonaut@nothingisreal.com>
 #
@@ -136,17 +136,16 @@ print STDERR "from     = $from\tto     = $to\nenc_from = $enc_from\tenc_to = $en
 
 # Simple case: both encodings are ISO/UTF
 if ($enc_from =~ /^utf|^iso/ && $enc_to =~ /^utf|^iso/) {
-foreach $line (<>) {
-  from_to($line, $enc_from, $enc_to);
-  print $line;
-}
-exit;
+  foreach $line (<>) {
+    from_to($line, $enc_from, $enc_to);
+    print $line;
+  }
+  exit;
 }
 
 # Perform character substitution
 $from = $encodings{$from};
 $to   = $encodings{$to};
-
 
 foreach $line (<>) {
 
