@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 #
-# $Id: eoconv.pl,v 1.26 2005-03-14 08:49:20 psy Exp $
+# $Id: eoconv.pl,v 1.27 2005-03-15 03:33:08 psy Exp $
 #
 # Copyright (C) 2004, 2005 Tristan Miller <psychonaut@nothingisreal.com>
 #
@@ -98,10 +98,10 @@ my %encodings = (
 		 'LaTeX'      => \@enc_latex,
 		 'iso-8859-3' => \@enc_iso_8859_3,
 		 'ISO-8859-3' => \@enc_iso_8859_3,
-		 'latin3' => \@enc_iso_8859_3,
-		 'latin-3' => \@enc_iso_8859_3,
-		 'Latin3' => \@enc_iso_8859_3,
-		 'Latin-3' => \@enc_iso_8859_3,
+		 'latin3'     => \@enc_iso_8859_3,
+		 'latin-3'    => \@enc_iso_8859_3,
+		 'Latin3'     => \@enc_iso_8859_3,
+		 'Latin-3'    => \@enc_iso_8859_3,
 		 'utf-7'      => \@enc_utf7,
 		 'utf-8'      => \@enc_utf8,
 		 'utf-16'     => \@enc_utf8,
