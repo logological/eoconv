@@ -1,10 +1,10 @@
-CHEOPS NEWS -- history of user-visible changes
-$Date: 2004-11-26 18:49:47 $
+eoconv NEWS -- history of user-visible changes
+$Date: 2004-11-26 18:55:30 $
 
 Copyright (C) 2004 Tristan Miller.  See the end of this file for
 copying conditions.
 
-Please send CHEOPS bug reports to Tristan Miller
+Please send eoconv bug reports to Tristan Miller
 <psychonaut@nothingisreal.com>.
 
 
@@ -12,6 +12,7 @@ Version 1.2
 
 * Fixed a minor bug hindering batch handling of files from any textual
   encoding to Unicode
+* Corrected a misprint in the NEWS file
 
 Version 1.1
 
