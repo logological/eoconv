@@ -8,7 +8,7 @@
 #      use Encode 'from_to';
 #      from_to($data, "iso-8859-3", "utf-8");
 
-# $Id: eoconv.pl,v 1.13 2004-09-10 23:28:22 psy Exp $
+# $Id: eoconv.pl,v 1.14 2004-09-11 00:09:43 psy Exp $
 
 # Copyright (C) 2004 Tristan Miller <psychonaut@nothingisreal.com>
 #
@@ -66,7 +66,7 @@ my @enc_iso_8859_3 = ("\xe6", "\xf8", "\xb6",
 		      "\xc6", "\xd8", "\xa6",
 		      "\xac", "\xde", "\xdd");
 
-my @enc_utf_8 = ("\x{0109}", "\x{011d}", "\x{0125}",
+my @enc_utf8 = ("\x{0109}", "\x{011d}", "\x{0125}",
 		 "\x{0135}", "\x{015d}", "\x{016d}",
 		 "\x{0108}", "\x{011c}", "\x{0124}",
 		 "\x{0134}", "\x{015c}", "\x{016c}");
@@ -79,9 +79,10 @@ my %encodings = (
 		 'html-hex'   => \@enc_html_hex,
 		 'html-dec'   => \@enc_html_dec,
 		 'iso-8859-3' => \@enc_iso_8859_3,
-		 'utf-7'      => \@enc_utf_7,
-		 'utf-8'      => \@enc_utf_8,
-		 'utf-16'     => \@enc_utf_8
+		 'utf7'       => \@enc_utf8,
+		 'utf8'       => \@enc_utf8,
+		 'utf16'      => \@enc_utf8,
+		 'utf32'      => \@enc_utf8
 		);
 
 my $man = 0;
@@ -122,19 +123,49 @@ EOF
   exit 0;
 }
 
-# Convert between ASCII encodings
+# Set Perl's input/output encoding
+my $enc_from = "ascii";
+$enc_from = $from if $from =~ /^utf|^iso/;
+
+my $enc_to = "ascii";
+$enc_to = $to if $to =~ /^utf|^iso/;
+
+use encoding 'ascii', STDOUT => $to, STDIN => $from;
+
+print STDERR "from     = $from\tto     = $to\nenc_from = $enc_from\tenc_to = $enc_to\n";
+
+# Simple case: both encodings are ISO/UTF
+if ($enc_from =~ /^utf|^iso/ && $enc_to =~ /^utf|^iso/) {
+foreach $line (<>) {
+  from_to($line, $enc_from, $enc_to);
+  print $line;
+}
+exit;
+}
+
+# Perform character substitution
 $from = $encodings{$from};
 $to   = $encodings{$to};
 
+
 foreach $line (<>) {
 
+  print "before1: $line";
+
+  from_to($line, $enc_from, 'utf8');
+
+  print "before2: $line";
 
   for($i = 0; $i < @$from ; $i++)
     {
-      $line =~ s/$$from[$i]/$$to[$i]/g;
+#      $line =~ s/$$from[$i]/$$to[$i]/g;
     }
 
-  print $line;
+  print "after1: $line";
+
+  from_to($line, $enc_from, $enc_to);
+
+  print "after2: $line";
 }
 
 __END__
@@ -157,7 +188,7 @@ eoconv --from=I<encoding> --to=I<encoding> [F<file>]
 
  Valid encodings:
    post-h post-x post-caret pre-caret
-   iso-8859-3 utf-7 utf-8 utf-16
+   iso-8859-3 utf7 utf8 utf16 utf32
    html-hex html-dec
 
 =head1 OPTIONS
@@ -192,43 +223,47 @@ Print version information and exit.
 
 =item I<post-h>
 
-Postfix h notation
+ASCII postfix h notation
 
 =item I<post-x>
 
-Postfix x notation
+ASCII postfix x notation
 
 =item I<post-caret>
 
-Postfix caret (^) notation
+ASCII postfix caret (^) notation
 
 =item I<pre-caret>
 
-Prefix caret (^) notation
+ASCII prefix caret (^) notation
 
 =item I<iso-8859-3>
 
 ISO-8859-3
 
-=item I<utf-7>
+=item I<utf7>
 
 Unicode UTF-7
 
-=item I<utf-8>
+=item I<utf8>
 
 Unicode UTF-8
 
-=item I<utf-16>
+=item I<utf16>
 
 Unicode UTF-16
 
+=item I<utf32>
+
+Unicode UTF-32
+
 =item I<html-hex>
 
-HTML hexadecimal entities
+ASCII HTML hexadecimal entities
 
 =item I<html-dec>
 
-HTML decimal entities
+ASCII HTML decimal entities
 
 =back
 
