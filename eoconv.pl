@@ -33,7 +33,7 @@ my $help = 0;
 my $version = 0;
 my $from = 0;
 my $to = 0;
-my $ver='$Id: eoconv.pl,v 1.9 2004-09-10 22:39:11 psy Exp $';
+my $ver='$Id: eoconv.pl,v 1.10 2004-09-10 22:40:34 psy Exp $';
 
 GetOptions('help|?' => \$help,
 	   man => \$man,
@@ -111,7 +111,9 @@ my %encodings = (
 		 html_hex   => \@enc_html_hex,
 		 html_dec   => \@enc_html_dec,
 		 iso_8859_3 => \@enc_iso_8859_3,
-		 utf_8      => \@enc_utf_8
+		 utf_7      => \@enc_utf_7,
+		 utf_8      => \@enc_utf_8,
+		 utf_16     => \@enc_utf_16
 		);
 
 $from = \@enc_post_x;
