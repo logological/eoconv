@@ -23,7 +23,7 @@ use Pod::Usage;
 my $man = 0;
 my $help = 0;
 my $version = 0;
-my $ver='$Id: eoconv.pl,v 1.6 2004-09-10 21:43:53 psy Exp $';
+my $ver='$Id: eoconv.pl,v 1.7 2004-09-10 21:45:39 psy Exp $';
 
 GetOptions('help|?' => \$help,
 	   man => \$man,
@@ -56,25 +56,25 @@ EOF
 #      use Encode 'from_to';
 #      from_to($data, "iso-8859-3", "utf-8");
 
-@enc_x = ("cx", "gx", "hx",
-	  "jx", "sx", "ux",
-	  "Cx", "Gx", "Hx",
-	  "Jx", "Sx", "Ux");
+@enc_post_x = ("cx", "gx", "hx",
+	       "jx", "sx", "ux",
+	       "Cx", "Gx", "Hx",
+	       "Jx", "Sx", "Ux");
 
-@enc_h = ("ch", "gh", "hh",
-	  "jh", "sh", "uh",
-	  "Ch", "Gh", "Hh",
-	  "Jh", "Sh", "Uh");
+@enc_post_h = ("ch", "gh", "hh",
+	       "jh", "sh", "uh",
+	       "Ch", "Gh", "Hh",
+	       "Jh", "Sh", "Uh");
 
-@enc_pre_caret = ("c^", "g^", "h^",
-	   "j^", "s^", "u^",
-	   "C^", "G^", "H^",
-	   "J^", "S^", "U^");
+@enc_post_caret = ("c^", "g^", "h^",
+		   "j^", "s^", "u^",
+		   "C^", "G^", "H^",
+		   "J^", "S^", "U^");
 
-@enc_post_caret = ("^c", "^g", "^h",
-	   "^j", "^s", "^u",	
-	   "^C", "^G", "^H",
-	   "^J", "^S", "^U");
+@enc_pre_caret = ("^c", "^g", "^h",
+		  "^j", "^s", "^u",	
+		  "^C", "^G", "^H",
+		  "^J", "^S", "^U");
 
 @enc_html_hex = ("&#x109;", "&#x11d;", "&#x125;",
 		 "&#x135;", "&#x15d;", "&#x16d;",
@@ -92,11 +92,11 @@ EOF
 		   "\xac", "\xde", "\xdd");
 
 @enc_utf_8 = ("\x{0109}", "\x{011d}", "\x{0125}",
-	     "\x{0135}", "\x{015d}", "\x{016d}",
-	     "\x{0108}", "\x{011c}", "\x{0124}",
-	     "\x{0134}", "\x{015c}", "\x{016c}");
+	      "\x{0135}", "\x{015d}", "\x{016d}",
+	      "\x{0108}", "\x{011c}", "\x{0124}",
+	      "\x{0134}", "\x{015c}", "\x{016c}");
 
-$from = \@enc_x;
+$from = \@enc_pre_x;
 $to   = \@enc_iso_8859_3;
 
 foreach $line (<>) {
@@ -128,7 +128,7 @@ eoconv [options] [file]
    --version   display version information
 
  Valid encodings:
-   h x pre-caret post-caret
+   post-h post-x post-caret pre-caret
    iso-8859-3 utf-7 utf-8 utf-16
    html-hex html-dec
 
@@ -162,21 +162,21 @@ Print version information and exit.
 
 =over 12
 
-=item B<h>
+=item B<post-h>
 
 Postfix h notation
 
-=item B<x>
+=item B<post-x>
 
 Postfix x notation
-
-=item B<pre-caret>
-
-Prefix caret (^) notation
 
 =item B<post-caret>
 
 Postfix caret (^) notation
+
+=item B<pre-caret>
+
+Prefix caret (^) notation
 
 =item B<iso-8859-3>
 
