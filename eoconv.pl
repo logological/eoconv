@@ -23,17 +23,18 @@ use Pod::Usage;
 my $man = 0;
 my $help = 0;
 my $version = 0;
-my $ver='$Id: eoconv.pl,v 1.5 2004-09-10 21:35:01 psy Exp $';
+my $ver='$Id: eoconv.pl,v 1.6 2004-09-10 21:43:53 psy Exp $';
 
 GetOptions('help|?' => \$help,
 	   man => \$man,
 	   version => \$version
 	  ) or pod2usage(2);
 
+# Display help/man page
 pod2usage(1) if $help;
-
 pod2usage(-exitstatus => 0, -verbose => 2) if $man;
 
+# Display version information
 if ($version) {
   $_ = substr $ver, 5;
   s/ ....\/..\/.. .*//;
@@ -65,12 +66,12 @@ EOF
 	  "Ch", "Gh", "Hh",
 	  "Jh", "Sh", "Uh");
 
-@enc_ca = ("c^", "g^", "h^",
+@enc_pre_caret = ("c^", "g^", "h^",
 	   "j^", "s^", "u^",
 	   "C^", "G^", "H^",
 	   "J^", "S^", "U^");
 
-@enc_cb = ("^c", "^g", "^h",
+@enc_post_caret = ("^c", "^g", "^h",
 	   "^j", "^s", "^u",	
 	   "^C", "^G", "^H",
 	   "^J", "^S", "^U");
@@ -90,7 +91,7 @@ EOF
 		   "\xc6", "\xd8", "\xa6",
 		   "\xac", "\xde", "\xdd");
 
-@enc_utf8 = ("\x{0109}", "\x{011d}", "\x{0125}",
+@enc_utf_8 = ("\x{0109}", "\x{011d}", "\x{0125}",
 	     "\x{0135}", "\x{015d}", "\x{016d}",
 	     "\x{0108}", "\x{011c}", "\x{0124}",
 	     "\x{0134}", "\x{015c}", "\x{016c}");
@@ -127,7 +128,9 @@ eoconv [options] [file]
    --version   display version information
 
  Valid encodings:
-   h x pc cp iso-8859-3 utf-7 utf-8 utf-16
+   h x pre-caret post-caret
+   iso-8859-3 utf-7 utf-8 utf-16
+   html-hex html-dec
 
 =head1 OPTIONS
 
@@ -167,11 +170,11 @@ Postfix h notation
 
 Postfix x notation
 
-=item B<pc>
+=item B<pre-caret>
 
 Prefix caret (^) notation
 
-=item B<cp>
+=item B<post-caret>
 
 Postfix caret (^) notation
 
@@ -190,6 +193,14 @@ Unicode UTF-8
 =item B<utf-16>
 
 Unicode UTF-16
+
+=item B<html-hex>
+
+HTML hexadecimal entities
+
+=item B<html-dec>
+
+HTML decimal entities
 
 =back
 
