@@ -1,8 +1,8 @@
 #!/usr/bin/perl
 #
-# $Id: eoconv.pl,v 1.24 2004-11-26 18:49:47 psy Exp $
+# $Id: eoconv.pl,v 1.25 2005-03-14 07:52:49 psy Exp $
 #
-# Copyright (C) 2004 Tristan Miller <psychonaut@nothingisreal.com>
+# Copyright (C) 2004, 2005 Tristan Miller <psychonaut@nothingisreal.com>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -27,6 +27,16 @@ my @enc_post_x = ("cx", "gx", "hx",
 		  "jx", "sx", "ux",
 		  "Cx", "Gx", "Hx",
 		  "Jx", "Sx", "Ux");
+
+my @enc_post_H = ("ch", "gh", "hh",
+		  "jh", "sh", "u",
+		  "CH", "GH", "HH",
+		  "JH", "SH", "U");
+
+my @enc_post_X = ("cx", "gx", "hx",
+		  "jx", "sx", "ux",
+		  "CX", "GX", "HX",
+		  "JX", "SX", "UX");
 
 my @enc_post_h = ("ch", "gh", "hh",
 		  "jh", "sh", "u",
@@ -71,11 +81,17 @@ my @enc_utf8 = ("\x{0109}", "\x{011d}", "\x{0125}",
 my %encodings = (
 		 'post-x'     => \@enc_post_x,
 		 'post-h'     => \@enc_post_h,
+		 'post-X'     => \@enc_post_X,
+		 'post-H'     => \@enc_post_H,
 		 'post-caret' => \@enc_post_caret,
 		 'pre-caret'  => \@enc_pre_caret,
 		 'html-hex'   => \@enc_html_hex,
 		 'html-dec'   => \@enc_html_dec,
 		 'iso-8859-3' => \@enc_iso_8859_3,
+		 'utf-7'      => \@enc_utf7,
+		 'utf-8'      => \@enc_utf8,
+		 'utf-16'     => \@enc_utf8,
+		 'utf-32'     => \@enc_utf8,
 		 'utf7'       => \@enc_utf7,
 		 'utf8'       => \@enc_utf8,
 		 'utf16'      => \@enc_utf8,
@@ -105,8 +121,8 @@ pod2usage(-exitstatus => 0, -verbose => 2) if $man;
 # Display version information
 if ($version) {
   print <<EOF;
-eoconv 1.0
-Copyright (C) 2004 Tristan Miller
+eoconv 1.3
+Copyright (C) 2004, 2005 Tristan Miller
 This is free software; see the source for copying conditions.  There is NO
 warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 EOF
@@ -123,8 +139,8 @@ if (!exists $encodings{$from} || !exists $encodings{$to}) {
 	    -msg => "eoconv: invalid encoding specified");
 }
 
-# Warning against using postfix-h
-if (!$quiet && ($from eq "post-h")) {
+# Warning against using postfix-h and postfix-H
+if (!$quiet && ($from eq "post-h" || $from eq "post-H")) {
   print STDERR "eoconv: warning: conversion from postfix-h notation is not recommended\n"
 }
 
@@ -207,8 +223,8 @@ eoconv [-q] --from=I<encoding> --to=I<encoding> [F<file> ...]
    --version    display version information
 
  Valid encodings:
-   post-h post-x post-caret pre-caret html-hex html-dec
-   iso-8859-3 utf7 utf8 utf16 utf32
+   post-h post-H post-x post-X post-caret pre-caret
+   html-hex html-dec iso-8859-3 utf-7 utf-8 utf-16 utf-32
 
 =head1 DESCRIPTION
 
@@ -256,9 +272,17 @@ Print version information and exit.
 
 ASCII postfix h notation
 
+=item I<post-H>
+
+ASCII postfix H notation
+
 =item I<post-x>
 
 ASCII postfix x notation
+
+=item I<post-X>
+
+ASCII postfix X notation
 
 =item I<post-caret>
 
@@ -280,19 +304,19 @@ ASCII HTML decimal entities
 
 ISO-8859-3
 
-=item I<utf7>
+=item I<utf-7>
 
 Unicode UTF-7
 
-=item I<utf8>
+=item I<utf-8>
 
 Unicode UTF-8
 
-=item I<utf16>
+=item I<utf-16>
 
 Unicode UTF-16
 
-=item I<utf32>
+=item I<utf-32>
 
 Unicode UTF-32
 
@@ -324,6 +348,11 @@ convert from postfix-h notation via automated means.  This notation
 suffers from the additional drawback that the text cannot be sorted
 with standard rules for ASCII text.
 
+=head2 POSTFIX-H NOTATION
+
+This is the same as postfix-h notation, except that `H' is used
+instead of `h' following a capital letter.
+
 =head2 POSTFIX-x NOTATION
 
 This is the most common ASCII notation encountered today.  It involves
@@ -331,6 +360,11 @@ appending an `x' to a letter to indicate that it should have an accent
 (be it circumflex or breve).  Since `x' is not a letter in the
 Esperanto alphabet, no ambiguity results.  However, ASCII sorting
 algorithms still fail with postfix-x text.
+
+=head2 POSTFIX-X NOTATION
+
+This is the same as postfix-x notation, except that `X' is used
+instead of `x' following a capital letter.
 
 =head2 PREFIX- AND POSTFIX-CARET NOTATION
 
@@ -340,8 +374,11 @@ caret (`^') to a letter to indicate that it should have an accent.
 =head2 ISO-8859-3 (LATIN-3)
 
 ISO 8859-3, also known as Latin-3 or South European, is an 8-bit
-character encoding for Turkish, Maltese, and Esperanto.  High-bit
-characters are used to encode the accented Esperanto letters.
+character encoding for Esperanto.  High-bit characters are used to
+encode the accented Esperanto letters.  ISO-8859-3 can also be used
+for encoding English, Finnish, German, Italian, Latin, Maltese,
+Turkish, and Portuguese, making it useful for texts which mix
+Esperanto with one or more of these languages.
 
 =head2 UNICODE (ISO/IEC 10646)
 
@@ -359,15 +396,16 @@ are functionally equivalent.
 
 =head1 BUGS
 
-Because postfix-h notation is inherently ambiguous, conversion from
-postfix-h text is unlikely to result in coherent text.  Use at your
-own risk, and carefully proofread the results.
+Because the postfix-h and postfix-H notations are inherently
+ambiguous, conversion from postfix-h or -H text is unlikely to result
+in coherent text.  Use at your own risk, and carefully proofread the
+results.
 
 Report bugs to E<lt>psychonaut@nothingisreal.comE<gt>.
 
 =head1 COPYRIGHT
 
-Copyright (C) 2004 Tristan Miller.
+Copyright (C) 2004, 2005 Tristan Miller.
 
 Permission is granted to make and distribute verbatim or modified
 copies of this manual provided the copyright notice and this
