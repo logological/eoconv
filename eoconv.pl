@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 #
-# $Id: eoconv.pl,v 1.28 2005-03-15 03:54:36 psy Exp $
+# $Id: eoconv.pl,v 1.29 2005-03-15 03:55:18 psy Exp $
 #
 # Copyright (C) 2004, 2005 Tristan Miller <psychonaut@nothingisreal.com>
 #
@@ -143,7 +143,7 @@ pod2usage(-exitstatus => 0, -verbose => 2) if $man;
 # Display version information
 if ($version) {
   print <<EOF;
-eoconv 1.3
+eoconv 1.3.1
 Copyright (C) 2004, 2005 Tristan Miller
 This is free software; see the source for copying conditions.  There is NO
 warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
