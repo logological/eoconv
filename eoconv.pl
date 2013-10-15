@@ -182,19 +182,19 @@ if ( !$quiet && ( $from eq "post-h" || $from eq "post-H" ) ) {
 
 # Set Perl's input/output encoding
 my $enc_from = "ascii";
-if ( $from =~ /^utf|^iso|^latin/imsx ) {
+if ( $from =~ /^utf|^iso|^latin/ims ) {
     $enc_from = $from;
 }
 
 my $enc_to = "ascii";
-if ( $to =~ /^utf|^iso|^latin/imsx ) {
+if ( $to =~ /^utf|^iso|^latin/ims ) {
     $enc_to = $to;
 }
 
 use encoding 'ascii', STDOUT => $to, STDIN => $from;
 
 # Case: both encodings are ISO/UTF
-if ( $enc_from =~ /^utf|^iso|^latin/ismx && $enc_to =~ /^utf|^iso|^latin/ismx )
+if ( $enc_from =~ /^utf|^iso|^latin/ims && $enc_to =~ /^utf|^iso|^latin/ims )
 {
     while ( my $line = <> ) {
         from_to( $line, $enc_from, $enc_to );
@@ -204,12 +204,12 @@ if ( $enc_from =~ /^utf|^iso|^latin/ismx && $enc_to =~ /^utf|^iso|^latin/ismx )
 }
 
 # Case: both encodings are ASCII
-if ( $enc_from =~ /^ascii/smx && $enc_to =~ /^ascii/smx ) {
+if ( $enc_from =~ /^ascii/sm && $enc_to =~ /^ascii/sm ) {
     $from = $encodings{$from};
     $to   = $encodings{$to};
     while ( my $line = <> ) {
         for ( 0 .. @$from - 1 ) {
-            $line =~ s/$$from[$_]/$$to[$_]/gmsx;
+            $line =~ s/$$from[$_]/$$to[$_]/gms;
         }
         print $line;
     }
@@ -217,12 +217,12 @@ if ( $enc_from =~ /^ascii/smx && $enc_to =~ /^ascii/smx ) {
 }
 
 # Case: ASCII => ISO/UTF
-if ( $enc_from =~ /^ascii/msx && $enc_to =~ /^utf|^iso|^latin/imsx ) {
+if ( $enc_from =~ /^ascii/ms && $enc_to =~ /^utf|^iso|^latin/ims ) {
     $from = $encodings{$from};
     $to   = $encodings{"iso-8859-3"};
     while ( my $line = <> ) {
         for ( 0 .. @$from - 1 ) {
-            $line =~ s/$$from[$_]/$$to[$_]/gmsx;
+            $line =~ s/$$from[$_]/$$to[$_]/gms;
         }
         from_to( $line, 'iso-8859-3', $enc_to );
         print $line;
@@ -236,7 +236,7 @@ $to   = $encodings{$to};
 while ( my $line = <> ) {
     from_to( $line, $enc_from, 'utf7' );
     for ( 0 .. @$from - 1 ) {
-        $line =~ s/$$from[$_]/$$to[$_]/gmsx;
+        $line =~ s/$$from[$_]/$$to[$_]/gms;
     }
     print $line;
 }
