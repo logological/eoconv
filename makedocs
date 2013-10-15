@@ -1,5 +1,6 @@
 #!/bin/bash
 
+mkdir -p doc
 FILE=eoconv.pl
 pod2man $FILE >doc/eoconv.1
 pod2html $FILE >doc/eoconv.html

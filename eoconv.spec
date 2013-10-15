@@ -1,6 +1,6 @@
 Summary: Convert text files between various Esperanto encodings
 Name: eoconv
-Version: 1.3.1
+Version: 1.4
 Release: 1
 License: GPL
 Group: Applications/Text
@@ -9,7 +9,8 @@ Source0: http://www.nothingisreal.com/eoconv/%{name}-%{version}.tar.bz2
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 Prefix: %{_prefix}
 Requires: perl >= 5.6
-Distribution: SuSE 9.0 (noarch)
+Distribution: SuSE 11.4 (noarch)
+BuildArch: noarch
 
 %description
 eoconv is a tool which converts text files to and from the following
@@ -49,6 +50,6 @@ install -D doc/eoconv.1.gz $RPM_BUILD_ROOT%{_prefix}/share/man/man1/eoconv.1.gz
 
 
 %changelog
-* Mon Mar 15 2005 Tristan Miller <psychonaut@nothingisreal.com> - 
+* Tue Oct 15 2013 Tristan Miller <psychonaut@nothingisreal.com> - 
 - Initial build.
 
