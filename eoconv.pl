@@ -191,8 +191,6 @@ if ( $to =~ /^utf|^iso|^latin/ims ) {
     $enc_to = $to;
 }
 
-use encoding 'ascii', STDOUT => $to, STDIN => $from;
-
 # Case: both encodings are ISO/UTF
 if ( $enc_from =~ /^utf|^iso|^latin/ims && $enc_to =~ /^utf|^iso|^latin/ims )
 {
