@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 #
-# Copyright (C) 2004-2013 Tristan Miller
+# Copyright (C) 2004-2016 Tristan Miller
 # <psychonaut@nothingisreal.com>
 #
 # This program is free software; you can redistribute it and/or modify
@@ -23,7 +23,7 @@ use Encode 'from_to';
 use strict;
 use warnings;
 
-our $VERSION = 1.4;
+our $VERSION = "1.5-SNAPSHOT";
 
 my @enc_post_x = ("cx", "gx", "hx",
                   "jx", "sx", "ux",
@@ -150,8 +150,8 @@ if ($man) {
 # Display version information
 if ($version) {
     print <<"EOF";
-eoconv 1.4
-Copyright (C) 2004-2013 Tristan Miller
+eoconv $VERSION
+Copyright (C) 2004-2016 Tristan Miller
 This is free software; see the source for copying conditions.  There is NO
 warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 EOF
@@ -463,7 +463,7 @@ charsets(7), ascii(7), iso_8859-3(7), unicode(7), utf-8(7), latex(1)
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2004-2013 Tristan Miller.
+Copyright (C) 2004-2016 Tristan Miller.
 
 Permission is granted to make and distribute verbatim or modified
 copies of this manual provided the copyright notice and this

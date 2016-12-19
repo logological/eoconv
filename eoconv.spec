@@ -1,15 +1,15 @@
 Summary: Convert text files between various Esperanto encodings
 Name: eoconv
-Version: 1.4
+Version: 1.5-SNAPSHOT
 Release: 1
 License: GPL
 Group: Applications/Text
 URL: http://www.nothingisreal.com/eoconv/
-Source0: http://www.nothingisreal.com/eoconv/%{name}-%{version}.tar.bz2
+Source0: https://github.com/logological/%{name}/archive/%{version}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 Prefix: %{_prefix}
-Requires: perl >= 5.6
-Distribution: SuSE 11.4 (noarch)
+Requires: perl >= 5.20
+Distribution: openSUSE Tumbleweed
 BuildArch: noarch
 
 %description
@@ -44,12 +44,12 @@ install -D doc/eoconv.1.gz $RPM_BUILD_ROOT%{_prefix}/share/man/man1/eoconv.1.gz
 %files
 %defattr(-,root,root,-)
 %{_prefix}/bin/eoconv
-%doc AUTHORS COPYING INSTALL NEWS README THANKS
+%doc AUTHORS COPYING INSTALL.md NEWS README.md THANKS
 %doc %{_prefix}/share/man/man1/eoconv.1.gz
 
 
 
 %changelog
-* Tue Oct 15 2013 Tristan Miller <psychonaut@nothingisreal.com> - 
+* Mon Dec 19 2016 Tristan Miller <psychonaut@nothingisreal.com> - 
 - Initial build.
 

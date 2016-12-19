@@ -1,11 +1,12 @@
 eoconv NEWS -- history of user-visible changes
 
-Copyright (C) 2004-2013 Tristan Miller.  See the end of this file for
+Copyright (C) 2004-2016 Tristan Miller.  See the end of this file for
 copying conditions.
 
-Please send eoconv bug reports to Tristan Miller
-<psychonaut@nothingisreal.com>.
+
+Version 1.5-SNAPSHOT
 
+* Remove deprecated encoding pragma
 
 Version 1.4
 
@@ -51,7 +52,7 @@ Version 0.90
 ----------------------------------------------------------------------
 Copyright information:
 
-Copyright (C) 2004-2013 Tristan Miller.
+Copyright (C) 2004-2016 Tristan Miller.
 
    Permission is granted to anyone to make or distribute verbatim
    copies of this document as received, in any medium, provided that
