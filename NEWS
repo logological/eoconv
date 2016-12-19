@@ -6,6 +6,7 @@ copying conditions.
 
 Version 1.5-SNAPSHOT
 
+* Added Makefile for easy installation
 * Remove deprecated encoding pragma
 
 Version 1.4

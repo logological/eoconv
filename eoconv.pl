@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 #
 # Copyright (C) 2004-2016 Tristan Miller
 # <psychonaut@nothingisreal.com>

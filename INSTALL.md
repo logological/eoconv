@@ -8,20 +8,13 @@ systems, but will probably run on other platforms as well.
 Installation
 ------------
 
-1. If you are using a Unix-like system and have Perl installed
-somewhere other than `/usr/bin/perl`, open the file `eoconv.pl` in an
-editor and modify the first line as appropriate.
+For many Unix-like systems the following should work:
 
-2. Copy the `eoconv.pl` file to somewhere in your path.  For example,
-on a Unix-like system, you might type the following:
+    $ make && sudo make install
 
-   $ sudo cp eoconv.pl /usr/local/bin/eoconv
-
-3. Documentation in various formats is available in the `doc`
-subdirectory; you can install this where desired.  For example, on a
-Unix-like system, the man page might be installed as follows:
-
-   $ sudo cp doc/eoconv.1 /usr/local/man/man1
+If you want eoconv installed somewhere other than the default prefix
+(`/usr/local`) then you will need to change the first line of
+`Makefile`.
 
 
 Running
