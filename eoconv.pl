@@ -23,7 +23,7 @@ use Encode 'from_to';
 use strict;
 use warnings;
 
-our $VERSION = "1.5-SNAPSHOT";
+our $VERSION = "1.5";
 
 my @enc_post_x = ("cx", "gx", "hx",
                   "jx", "sx", "ux",

@@ -4,7 +4,7 @@ Copyright (C) 2004-2016 Tristan Miller.  See the end of this file for
 copying conditions.
 
 
-Version 1.5-SNAPSHOT
+Version 1.5
 
 * Added Makefile for easy installation
 * Remove deprecated encoding pragma

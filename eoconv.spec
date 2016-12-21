@@ -1,6 +1,6 @@
 Summary: Convert text files between various Esperanto encodings
 Name: eoconv
-Version: 1.5-SNAPSHOT
+Version: 1.5
 Release: 1
 License: GPL
 Group: Applications/Text
@@ -30,12 +30,12 @@ Esperanto text encodings:
 %setup -q
 
 %build
+make
 
 %install
 [ "$RPM_BUILD_ROOT" != "/" ] && rm -rf $RPM_BUILD_ROOT
-install -D eoconv.pl $RPM_BUILD_ROOT%{_prefix}/bin/eoconv
-gzip doc/eoconv.1
-install -D doc/eoconv.1.gz $RPM_BUILD_ROOT%{_prefix}/share/man/man1/eoconv.1.gz
+make PREFIX=%{_prefix} DESTDIR=$RPM_BUILD_ROOT install-bin
+make PREFIX=%{_prefix} DESTDIR=$RPM_BUILD_ROOT install-man
 
 %clean
 [ "$RPM_BUILD_ROOT" != "/" ] && rm -rf $RPM_BUILD_ROOT

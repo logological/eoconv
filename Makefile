@@ -1,4 +1,8 @@
-PREFIX=/usr/local
+PREFIX?=/usr/local
+MAN1DIR=$(DESTDIR)$(PREFIX)/share/man/man1
+DOCDIR=$(DESTDIR)$(PREFIX)/share/doc
+BINDIR=$(DESTDIR)$(PREFIX)/bin
+
 DOCS=eoconv.html AUTHORS COPYING INSTALL.md NEWS README.md THANKS
 
 all: eoconv.1 eoconv.html
@@ -19,14 +23,21 @@ eoconv.html: eoconv.pl
 eoconv.1.gz: eoconv.1
 	gzip -f eoconv.1
 
-install: eoconv.1.gz eoconv.pl $(DOCS)
-	install -D eoconv.pl $(PREFIX)/bin/eoconv
-	mkdir -p $(PREFIX)/share/man/man1
-	cp eoconv.1.gz $(PREFIX)/share/man/man1
-	mkdir -p $(PREFIX)/share/doc/eoconv
-	cp $(DOCS) $(PREFIX)/share/doc/eoconv
+install-bin: eoconv.pl
+	install -D eoconv.pl $(BINDIR)/eoconv
+
+install-man: eoconv.1.gz
+	mkdir -p $(MAN1DIR)
+	cp eoconv.1.gz $(MAN1DIR)
+
+install-docs: $(DOCS)
+	mkdir -p $(DOCDIR)/eoconv
+	cp $(DOCS) $(DOCDIR)/eoconv
+
+install: install-bin install-man install-docs
 
 uninstall:
-	rm -f $(PREFIX)/share/man/man1/eoconv.1.gz
-	rm -f $(PREFIX)/bin/eoconv
-	$(foreach file,$(DOCS),rm -f $(PREFIX)/share/doc/eoconv/$(file);)
+	rm -f $(MAN1DIR)/eoconv.1.gz
+	rm -f $(BINDIR)/eoconv
+	$(foreach file,$(DOCS),rm -f $(DOCDIR)/eoconv/$(file);)
+	rmdir --ignore-fail-on-non-empty $(DOCDIR)/eoconv
