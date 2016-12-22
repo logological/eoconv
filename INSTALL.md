@@ -13,8 +13,9 @@ For many Unix-like systems the following should work:
     $ make && sudo make install
 
 If you want eoconv installed somewhere other than the default prefix
-(`/usr/local`) then you will need to change the first line of
-`Makefile`.
+(`/usr/local`) then you can specify this with the `PREFIX` variable:
+
+   $ make && sudo make PREFIX=/some/path install
 
 
 Running
