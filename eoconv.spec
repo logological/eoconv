@@ -5,7 +5,7 @@ Release: 2
 License: GPL-3.0+
 Group: Applications/Text
 URL: https://logological.org/eoconv
-Source0: https://files.nothingisreal.com/software/eoconv/%{name}-%{version}.tar.gz
+Source0: https://files.nothingisreal.com/software/eoconv/%{name}-%{version}.tar.bz2
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 Prefix: %{_prefix}
 Requires: perl >= 5.20
