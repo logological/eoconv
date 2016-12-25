@@ -1,11 +1,11 @@
 Summary: Convert text files between various Esperanto encodings
 Name: eoconv
 Version: 1.5
-Release: 1
-License: GPL
+Release: 2
+License: GPL-3.0+
 Group: Applications/Text
-URL: http://www.nothingisreal.com/eoconv/
-Source0: https://github.com/logological/%{name}/archive/%{version}.tar.gz
+URL: https://logological.org/eoconv
+Source0: https://files.nothingisreal.com/software/eoconv/%{name}-%{version}.tar.gz
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 Prefix: %{_prefix}
 Requires: perl >= 5.20
@@ -48,8 +48,11 @@ make PREFIX=%{_prefix} DESTDIR=$RPM_BUILD_ROOT install-man
 %doc %{_prefix}/share/man/man1/eoconv.1.gz
 
 
-
 %changelog
+* Mon Dec 26 2016 Tristan Miller <psychonaut@nothingisreal.com> - 
+- Update URLs.
+- Update license header per SPDX Specification.
+
 * Mon Dec 19 2016 Tristan Miller <psychonaut@nothingisreal.com> - 
 - Initial build.
 
