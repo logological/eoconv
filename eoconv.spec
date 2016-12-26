@@ -51,6 +51,7 @@ Esperanto text encodings:
 
 %changelog
 * Mon Dec 26 2016 Tristan Miller <psychonaut@nothingisreal.com> - 
+- Clean up RPM for OBS.
 - Update URLs.
 - Update license header per SPDX Specification.
 
