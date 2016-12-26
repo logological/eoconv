@@ -449,7 +449,7 @@ ambiguous, conversion from postfix-h or -H text is unlikely to result
 in coherent text.  Use at your own risk, and carefully proofread the
 results.
 
-Report bugs to E<lt>psychonaut@nothingisreal.comE<gt>.
+Report bugs at E<lt>https://github.com/logological/eoconv/issuesE<gt>.
 
 =head1 AUTHOR
 
