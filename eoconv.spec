@@ -1,51 +1,52 @@
 Summary: Convert text files between various Esperanto encodings
 Name: eoconv
 Version: 1.5
-Release: 2
+Release: 0
 License: GPL-3.0+
 Group: Applications/Text
 URL: https://logological.org/eoconv
 Source0: https://files.nothingisreal.com/software/eoconv/%{name}-%{version}.tar.bz2
-BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
+BuildRoot: %{_tmppath}/%{name}-%{version}-build
 Prefix: %{_prefix}
 Requires: perl >= 5.20
-Distribution: openSUSE Tumbleweed
+BuildRequires: perl(Pod::Man)
+BuildRequires: gzip
 BuildArch: noarch
 
 %description
 eoconv is a tool which converts text files to and from the following
 Esperanto text encodings:
 
-  * ASCII postfix h notation
-  * ASCII postfix x notation
-  * ASCII postfix caret (^) notation
-  * ASCII prefix caret (^) notation
-  * ISO-8859-3
-  * Unicode (UTF-7, UTF-8, UTF-16, UTF-32)
-  * HTML entities (decimal or hexadecimal)
-  * LaTeX sequences
+* ASCII postfix h notation
+* ASCII postfix x notation
+* ASCII postfix caret (^) notation
+* ASCII prefix caret (^) notation
+* ISO-8859-3
+* Unicode (UTF-7, UTF-8, UTF-16, UTF-32)
+* HTML entities (decimal or hexadecimal)
+* LaTeX sequences
 
 
 %prep
 %setup -q
 
 %build
-make
+%{__make}
 
 %install
-[ "$RPM_BUILD_ROOT" != "/" ] && rm -rf $RPM_BUILD_ROOT
-make PREFIX=%{_prefix} DESTDIR=$RPM_BUILD_ROOT install-bin
-make PREFIX=%{_prefix} DESTDIR=$RPM_BUILD_ROOT install-man
+[ "%{buildroot}" != "/" ] && %{__rm} -rf %{buildroot}
+%{__make} PREFIX=%{_prefix} DESTDIR=%{buildroot} install-bin
+%{__make} PREFIX=%{_prefix} DESTDIR=%{buildroot} install-man
 
 %clean
-[ "$RPM_BUILD_ROOT" != "/" ] && rm -rf $RPM_BUILD_ROOT
+[ "%{buildroot}" != "/" ] && %{__rm} -rf %{buildroot}
 
 
 %files
 %defattr(-,root,root,-)
-%{_prefix}/bin/eoconv
+%{_bindir}/%{name}
 %doc AUTHORS COPYING INSTALL.md NEWS README.md THANKS
-%doc %{_prefix}/share/man/man1/eoconv.1.gz
+%doc %{_mandir}/man1/%{name}.1*
 
 
 %changelog
