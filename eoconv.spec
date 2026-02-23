@@ -51,7 +51,9 @@ Esperanto text encodings:
 
 %changelog
 * Mon Feb 23 2026 Tristan Miller <psychonaut@nothingisreal.com> - 
-- Update to eoconv 1.6.
+- Update to eoconv 1.6:
+  * Fixed bug in LaTeX notation where Perl was interpreting the
+    input text as a regex pattern.
 
 * Mon Dec 26 2016 Tristan Miller <psychonaut@nothingisreal.com> - 
 - Clean up RPM for OBS.
