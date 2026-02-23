@@ -7,6 +7,8 @@ copying conditions.
 Version 1.6
 
 * Refactored code and documentation in line with Perl best practices
+* Fixed bug in LaTeX notation where Perl was interpreting the
+  input text as a regex pattern.
 
 Version 1.5
 

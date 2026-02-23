@@ -77,10 +77,10 @@ my @enc_iso_8859_3 = ("\xe6", "\xf8", "\xb6",
                       "\xc6", "\xd8", "\xa6",
                       "\xac", "\xde", "\xdd",);
 
-my @enc_utf7 = ('\\+AQk-', '\\+AR0-', '\\+ASU-',
-                '\\+ATU-', '\\+AV0-', '\\+AW0-',
-                '\\+AQg-', '\\+ARw-', '\\+ASQ-',
-                '\\+ATQ-', '\\+AVw-', '\\+AWw-',);
+my @enc_utf7 = ('+AQk-', '+AR0-', '+ASU-',
+                '+ATU-', '+AV0-', '+AW0-',
+                '+AQg-', '+ARw-', '+ASQ-',
+                '+ATQ-', '+AVw-', '+AWw-',);
 
 my @enc_utf8 = ("\x{0109}", "\x{011d}", "\x{0125}",
                 "\x{0135}", "\x{015d}", "\x{016d}",
@@ -210,7 +210,7 @@ if ( $enc_from =~ /^ascii/sm && $enc_to =~ /^ascii/sm ) {
     $to   = $encodings{$to};
     while ( my $line = <> ) {
         for ( 0 .. @{$from} - 1 ) {
-            $line =~ s/$$from[$_]/$$to[$_]/gms;
+            $line =~ s/\Q$$from[$_]\E/$$to[$_]/gms;
         }
         print $line or croak("print failed: $OS_ERROR");
     }
@@ -223,7 +223,7 @@ if ( $enc_from =~ /^ascii/ms && $enc_to =~ /^utf|^iso|^latin/ims ) {
     $to   = $encodings{'iso-8859-3'};
     while ( my $line = <> ) {
         for ( 0 .. @{$from} - 1 ) {
-            $line =~ s/$$from[$_]/$$to[$_]/gms;
+            $line =~ s/\Q$$from[$_]\E/$$to[$_]/gms;
         }
         from_to( $line, 'iso-8859-3', $enc_to );
         print $line or croak("print failed: $OS_ERROR");
@@ -237,7 +237,7 @@ $to   = $encodings{$to};
 while ( my $line = <> ) {
     from_to( $line, $enc_from, 'utf7' );
     for ( 0 .. @{$from} - 1 ) {
-        $line =~ s/$$from[$_]/$$to[$_]/gms;
+        $line =~ s/\Q$$from[$_]\E/$$to[$_]/gms;
     }
     print $line or croak("print failed: $OS_ERROR");
 }
