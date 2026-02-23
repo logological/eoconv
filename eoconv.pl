@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 #
-# Copyright (C) 2004-2016 Tristan Miller
+# Copyright (C) 2004-2026 Tristan Miller
 # <psychonaut@nothingisreal.com>
 #
 # This program is free software; you can redistribute it and/or modify
@@ -14,82 +14,84 @@
 # General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
-# along with this program. If not, see <http://www.gnu.org/licenses/>.
+# along with this program. If not, see
+# <https://www.gnu.org/licenses/>.
 
 use Getopt::Long;
 use Pod::Usage;
 use Encode 'from_to';
+use English qw( -no_match_vars );
 
 use strict;
 use warnings;
 
-our $VERSION = "1.5";
+our $VERSION = '1.6';
 
-my @enc_post_x = ("cx", "gx", "hx",
-                  "jx", "sx", "ux",
-                  "Cx", "Gx", "Hx",
-                  "Jx", "Sx", "Ux");
+my @enc_post_x = ('cx', 'gx', 'hx',
+                  'jx', 'sx', 'ux',
+                  'Cx', 'Gx', 'Hx',
+                  'Jx', 'Sx', 'Ux',);
 
-my @enc_post_H = ("ch", "gh", "hh",
-                  "jh", "sh", "u",
-                  "CH", "GH", "HH",
-                  "JH", "SH", "U");
+my @enc_post_h_cap = ('ch', 'gh', 'hh',
+                      'jh', 'sh', 'u',
+                      'CH', 'GH', 'HH',
+                      'JH', 'SH', 'U',);
 
-my @enc_post_X = ("cx", "gx", "hx",
-                  "jx", "sx", "ux",
-                  "CX", "GX", "HX",
-                  "JX", "SX", "UX");
+my @enc_post_x_cap = ('cx', 'gx', 'hx',
+                      'jx', 'sx', 'ux',
+                      'CX', 'GX', 'HX',
+                      'JX', 'SX', 'UX',);
 
-my @enc_post_h = ("ch", "gh", "hh",
-                  "jh", "sh", "u",
-                  "Ch", "Gh", "Hh",
-                  "Jh", "Sh", "U");
+my @enc_post_h = ('ch', 'gh', 'hh',
+                  'jh', 'sh', 'u',
+                  'Ch', 'Gh', 'Hh',
+                  'Jh', 'Sh', 'U',);
 
-my @enc_post_caret = ("c^", "g^", "h^",
-                      "j^", "s^", "u^",
-                      "C^", "G^", "H^",
-                      "J^", "S^", "U^");
+my @enc_post_caret = ('c^', 'g^', 'h^',
+                      'j^', 's^', 'u^',
+                      'C^', 'G^', 'H^',
+                      'J^', 'S^', 'U^',);
 
-my @enc_pre_caret = ("^c", "^g", "^h",
-                     "^j", "^s", "^u",
-                     "^C", "^G", "^H",
-                     "^J", "^S", "^U");
+my @enc_pre_caret = ('^c', '^g', '^h',
+                     '^j', '^s', '^u',
+                     '^C', '^G', '^H',
+                     '^J', '^S', '^U',);
 
-my @enc_latex = ("\\^{c}",   "\\^{g}", "\\^{h}",
-                 "\\^{\\j}", "\\^{s}", "\\u{u}",
-                 "\\^{C}",   "\\^{G}", "\\^{H}",
-                 "\\^{J}",   "\\^{S}", "\\u{U}");
+my @enc_latex = ('\\^{c}',   '\\^{g}', '\\^{h}',
+                 '\\^{\\j}', '\\^{s}', '\\u{u}',
+                 '\\^{C}',   '\\^{G}', '\\^{H}',
+                 '\\^{J}',   '\\^{S}', '\\u{U}',);
 
-my @enc_html_hex = ("&#x109;", "&#x11d;", "&#x125;",
-                    "&#x135;", "&#x15d;", "&#x16d;",
-                    "&#x108;", "&#x11c;", "&#x124;",
-                    "&#x134;", "&#x15c;", "&#x16c;");
+my @enc_html_hex = ('&#x109;', '&#x11d;', '&#x125;',
+                    '&#x135;', '&#x15d;', '&#x16d;',
+                    '&#x108;', '&#x11c;', '&#x124;',
+                    '&#x134;', '&#x15c;', '&#x16c;',);
 
-my @enc_html_dec = ("&#265;", "&#285;", "&#293;",
-                    "&#309;", "&#349;", "&#365;",
-                    "&#264;", "&#284;", "&#292;",
-                    "&#308;", "&#348;", "&#364;");
+my @enc_html_dec = ('&#265;', '&#285;', '&#293;',
+                    '&#309;', '&#349;', '&#365;',
+                    '&#264;', '&#284;', '&#292;',
+                    '&#308;', '&#348;', '&#364;',);
 
 my @enc_iso_8859_3 = ("\xe6", "\xf8", "\xb6",
                       "\xbc", "\xfe", "\xfd",
                       "\xc6", "\xd8", "\xa6",
-                      "\xac", "\xde", "\xdd");
+                      "\xac", "\xde", "\xdd",);
 
-my @enc_utf7 = ("\\+AQk-", "\\+AR0-", "\\+ASU-",
-                "\\+ATU-", "\\+AV0-", "\\+AW0-",
-                "\\+AQg-", "\\+ARw-", "\\+ASQ-",
-                "\\+ATQ-", "\\+AVw-", "\\+AWw-");
+my @enc_utf7 = ('\\+AQk-', '\\+AR0-', '\\+ASU-',
+                '\\+ATU-', '\\+AV0-', '\\+AW0-',
+                '\\+AQg-', '\\+ARw-', '\\+ASQ-',
+                '\\+ATQ-', '\\+AVw-', '\\+AWw-',);
 
 my @enc_utf8 = ("\x{0109}", "\x{011d}", "\x{0125}",
-                 "\x{0135}", "\x{015d}", "\x{016d}",
-                 "\x{0108}", "\x{011c}", "\x{0124}",
-                 "\x{0134}", "\x{015c}", "\x{016c}");
+                "\x{0135}", "\x{015d}", "\x{016d}",
+                "\x{0108}", "\x{011c}", "\x{0124}",
+                "\x{0134}", "\x{015c}", "\x{016c}",);
 
 my %encodings = (
     'post-x'     => \@enc_post_x,
     'post-h'     => \@enc_post_h,
-    'post-X'     => \@enc_post_X,
-    'post-H'     => \@enc_post_H,
+    'post-X'     => \@enc_post_x_cap,
+    'post-H'     => \@enc_post_h_cap,
     'post-caret' => \@enc_post_caret,
     'pre-caret'  => \@enc_pre_caret,
     'html-hex'   => \@enc_html_hex,
@@ -119,7 +121,7 @@ my %encodings = (
     'UTF7'       => \@enc_utf7,
     'UTF8'       => \@enc_utf8,
     'UTF16'      => \@enc_utf8,
-    'utf32'      => \@enc_utf8
+    'utf32'      => \@enc_utf8,
 );
 
 # Parse command-line options
@@ -149,9 +151,9 @@ if ($man) {
 
 # Display version information
 if ($version) {
-    print <<"EOF";
+    print <<"EOF" or croak("print failed: $OS_ERROR");
 eoconv $VERSION
-Copyright (C) 2004-2016 Tristan Miller
+Copyright (C) 2004-2026 Tristan Miller
 This is free software; see the source for copying conditions.  There is NO
 warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 EOF
@@ -163,30 +165,31 @@ if ( !( $from && $to ) ) {
     pod2usage(
         -exitstatus => 1,
         -verbose    => 0,
-        -msg        => "eoconv: must specify both an input and output encoding"
+        -msg        => 'eoconv: must specify both an input and output encoding'
     );
 }
 if ( !exists $encodings{$from} || !exists $encodings{$to} ) {
     pod2usage(
         -exitstatus => 1,
         -verbose    => 0,
-        -msg        => "eoconv: invalid encoding specified"
+        -msg        => 'eoconv: invalid encoding specified'
     );
 }
 
 # Warning against using postfix-h and postfix-H
-if ( !$quiet && ( $from eq "post-h" || $from eq "post-H" ) ) {
-    print STDERR
-"eoconv: warning: conversion from postfix-h notation is not recommended\n";
+if ( !$quiet && ( $from eq 'post-h' || $from eq 'post-H' ) ) {
+    print {*STDERR}
+    "eoconv: warning: conversion from postfix-h notation is not recommended\n"
+        or croak("print failed: $OS_ERROR");
 }
 
 # Set Perl's input/output encoding
-my $enc_from = "ascii";
+my $enc_from = 'ascii';
 if ( $from =~ /^utf|^iso|^latin/ims ) {
     $enc_from = $from;
 }
 
-my $enc_to = "ascii";
+my $enc_to = 'ascii';
 if ( $to =~ /^utf|^iso|^latin/ims ) {
     $enc_to = $to;
 }
@@ -196,7 +199,7 @@ if ( $enc_from =~ /^utf|^iso|^latin/ims && $enc_to =~ /^utf|^iso|^latin/ims )
 {
     while ( my $line = <> ) {
         from_to( $line, $enc_from, $enc_to );
-        print $line;
+        print $line or croak("print failed: $OS_ERROR");
     }
     exit;
 }
@@ -206,10 +209,10 @@ if ( $enc_from =~ /^ascii/sm && $enc_to =~ /^ascii/sm ) {
     $from = $encodings{$from};
     $to   = $encodings{$to};
     while ( my $line = <> ) {
-        for ( 0 .. @$from - 1 ) {
+        for ( 0 .. @{$from} - 1 ) {
             $line =~ s/$$from[$_]/$$to[$_]/gms;
         }
-        print $line;
+        print $line or croak("print failed: $OS_ERROR");
     }
     exit;
 }
@@ -217,13 +220,13 @@ if ( $enc_from =~ /^ascii/sm && $enc_to =~ /^ascii/sm ) {
 # Case: ASCII => ISO/UTF
 if ( $enc_from =~ /^ascii/ms && $enc_to =~ /^utf|^iso|^latin/ims ) {
     $from = $encodings{$from};
-    $to   = $encodings{"iso-8859-3"};
+    $to   = $encodings{'iso-8859-3'};
     while ( my $line = <> ) {
-        for ( 0 .. @$from - 1 ) {
+        for ( 0 .. @{$from} - 1 ) {
             $line =~ s/$$from[$_]/$$to[$_]/gms;
         }
         from_to( $line, 'iso-8859-3', $enc_to );
-        print $line;
+        print $line or croak("print failed: $OS_ERROR");
     }
     exit;
 }
@@ -233,10 +236,10 @@ $from = $encodings{'utf7'};
 $to   = $encodings{$to};
 while ( my $line = <> ) {
     from_to( $line, $enc_from, 'utf7' );
-    for ( 0 .. @$from - 1 ) {
+    for ( 0 .. @{$from} - 1 ) {
         $line =~ s/$$from[$_]/$$to[$_]/gms;
     }
-    print $line;
+    print $line or croak("print failed: $OS_ERROR");
 }
 
 __END__
@@ -417,7 +420,7 @@ ISO 8859-3, also known as Latin-3 or South European, is an 8-bit
 character encoding for Esperanto.  High-bit characters are used to
 encode the accented Esperanto letters.  ISO-8859-3 can also be used
 for encoding English, Finnish, German, Italian, Latin, Maltese,
-Turkish, and Portuguese, making it useful for texts which mix
+Turkish, and Portuguese, making it useful for texts that mix
 Esperanto with one or more of these languages.
 
 =head2 UNICODE (ISO/IEC 10646)
@@ -461,7 +464,7 @@ charsets(7), ascii(7), iso_8859-3(7), unicode(7), utf-8(7), latex(1)
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright (C) 2004-2016 Tristan Miller.
+Copyright (C) 2004-2026 Tristan Miller.
 
 Permission is granted to make and distribute verbatim or modified
 copies of this manual provided the copyright notice and this

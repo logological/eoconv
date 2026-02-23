@@ -1,6 +1,6 @@
 Summary: Convert text files between various Esperanto encodings
 Name: eoconv
-Version: 1.5
+Version: 1.6
 Release: 0
 License: GPL-3.0+
 Group: Applications/Text
@@ -14,7 +14,7 @@ BuildRequires: gzip
 BuildArch: noarch
 
 %description
-eoconv is a tool which converts text files to and from the following
+eoconv is a tool that converts text files to and from the following
 Esperanto text encodings:
 
 * ASCII postfix h notation
@@ -50,6 +50,9 @@ Esperanto text encodings:
 
 
 %changelog
+* Mon Feb 23 2026 Tristan Miller <psychonaut@nothingisreal.com> - 
+- Update to eoconv 1.6.
+
 * Mon Dec 26 2016 Tristan Miller <psychonaut@nothingisreal.com> - 
 - Clean up RPM for OBS.
 - Update URLs.

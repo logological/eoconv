@@ -23,7 +23,4 @@ Contributing
 Please post eoconv bug reports and feature requests on the
 [issue tracker](https://github.com/logological/eoconv/issues) or
 e-mail them to
-[Tristan Miller](mailto:psychonaut@nothingisreal.com). Feel free to
-fork the project and send
-[pull requests](https://help.github.com/articles/using-pull-requests/)
-for integration into the main distribution.
+[Tristan Miller](mailto:psychonaut@nothingisreal.com).
